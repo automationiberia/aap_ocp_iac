@@ -8,8 +8,6 @@ spec:
   channel: stable
   installPlanApproval: Automatic
   name: gitlab-runner-operator
-  # source: community-operators
-  source: certified-operators
-  image: registry.gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator/gitlab-runner-operator:v1.10.0
+  source: community-operators
   sourceNamespace: openshift-marketplace
 ...
