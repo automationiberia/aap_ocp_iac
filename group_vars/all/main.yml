@@ -13,6 +13,9 @@ aws_region: "{{ vault_aws_region }}"
 s3_bucket_name: "hub-testathon-bucket"
 s3_bucket_secret_pah_name: "s3-secret-automationhub-testathon"
 
+# AAP data
+aap_ocp_namespace: "ansible-automation-platform"
+
 # ArgoCD
 # argocd_repository_secret_name: "{{ vault_argocd_repository_secret_name }}"
 # argocd_repository_password: "{{ vault_argocd_repository_password }}"

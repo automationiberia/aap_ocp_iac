@@ -18,7 +18,7 @@
 
     - name: Create a Ansible Automation Platform namespace
       kubernetes.core.k8s:
-        name: "{{ aap_ocp_namespace | default('ansible-automation-platform') }}"
+        name: "{{ aap_ocp_namespace }}"
         api_version: v1
         kind: Namespace
         state: present
