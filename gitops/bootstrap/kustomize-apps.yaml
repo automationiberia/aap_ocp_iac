@@ -1,0 +1,63 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: aap-bootstrap
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+      - env: aap
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: 'bootstrap-aap'
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      source:
+        repoURL: 'https://github.com/automationiberia/aap_ocp_iac.git'
+        targetRevision: main
+        path: 'gitops/applications/{{env}}/base'
+      destination:
+        namespace: 'ansible-automation-platform'
+        server: "{{ url }}"
+...
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: gitlab-runner-bootstrap
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+      - env: 'gitlab-runner'
+        url: https://kubernetes.default.svc
+  template:
+    metadata:
+      name: 'testathon-gitlab-runner'
+    spec:
+      ignoreDifferences:
+      - kind: ServiceAccount
+        jsonPointers:
+        - /imagePullSecrets
+        - /secrets
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+      source:
+        repoURL: 'https://github.com/automationiberia/aap_ocp_iac.git'
+        targetRevision: main
+        path: 'gitops/applications/{{env}}/base'
+      destination:
+        namespace: 'testathon-gitlab-runner'
+        server: "{{ url }}"
+...

@@ -1,0 +1,12 @@
+---
+apiVersion: apps.gitlab.com/v1beta2
+kind: Runner
+metadata:
+  name: testathon-gitlab-runner
+  namespace: testathon-gitlab-runner
+spec:
+  gitlabUrl: 'https://gitlab.com'
+  imagePullPolicy: Always
+  tags: 'casc, testathon'
+  token: gitlab-runner-secret
+...

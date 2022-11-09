@@ -1,0 +1,15 @@
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: gitlab-runner-operator
+#  namespace: testathon-gitlab-runner
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: gitlab-runner-operator
+  # source: community-operators
+  source: certified-operators
+  image: registry.gitlab.com/gitlab-org/gl-openshift/gitlab-runner-operator/gitlab-runner-operator:v1.10.0
+  sourceNamespace: openshift-marketplace
+...

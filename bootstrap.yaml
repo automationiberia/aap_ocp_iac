@@ -1,0 +1,92 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  module_defaults:
+    group/k8s:
+      api_key: "{{ ocp_api_key }}"
+      host: "{{ ocp_api_host }}"
+      validate_certs: "{{ ocp_api_validate_certs }}"
+  tasks:
+    - name: Create a S3 bucket to be used as Automation Hub repository storage (it must be a shared filesystem)
+      amazon.aws.s3_bucket:
+        name: "{{ s3_bucket_name }}"
+        state: "{{ s3_bucket_state | default(aws_resources_state) | default('present') }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        region: "{{ aws_region }}"
+
+    - name: Create a Ansible Automation Platform namespace
+      kubernetes.core.k8s:
+        name: "{{ aap_ocp_namespace | default('ansible-automation-platform') }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: "Create Automation Hub secret to access S3 bucket"
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/add_aws_s3_secret.yaml.j2') }}"
+        wait: true
+
+    - name: "Install the Openshift GitOps operator"
+      kubernetes.core.k8s:
+        state: present
+        src: gitops/installation/gitops-operator.yaml
+        wait: true
+
+    - name: Wait until namespace openshift-gitops exists
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Namespace
+        name: openshift-gitops
+      register: gitops_namespace
+      until: gitops_namespace.resources[0].status.phase == "Active"
+
+    - name: "Create the ArgoCD instance"
+      kubernetes.core.k8s:
+        state: present
+        src: gitops/installation/argocd-server.yaml
+        wait: true
+      register: argocd_res
+
+    - name: "Show the ArgoCD instance credentials"
+      block:
+        - name: Get the ArgoCD Route hostname
+          kubernetes.core.k8s_info:
+            api_version: v1
+            kind: Route
+            name: openshift-gitops-server
+            namespace: openshift-gitops
+          register: route
+
+        - name: Get the ArgoCD admin password
+          kubernetes.core.k8s_info:
+            api_version: v1
+            kind: Secret
+            name: openshift-gitops-cluster
+            namespace: openshift-gitops
+          register: secret
+
+        - debug:
+            msg:
+              - "ArgoCD Instance URL: https://{{ route.resources[0].spec.host }}"
+              - "ArgoCD admin password: {{ secret.resources[0].data['admin.password'] | b64decode }}"
+
+    - name: "Create the ArgoCD secret to access gitops-demo git repo"
+      kubernetes.core.k8s:
+        state: present
+        definition: "{{ lookup('template', 'templates/add_gitops_demo_repo.yaml.j2') }}"
+        wait: true
+      when:
+        - argocd_repository_secret_name is defined
+        - argocd_repository_password is defined
+        - argocd_repository_url is defined
+        - argocd_repository_username is defined
+
+    - name: "Create the ArgoCD Bootstrap Application"
+      kubernetes.core.k8s:
+        state: present
+        src: gitops/installation/argocd-app-bootstrap.yaml
+        wait: true
+...
