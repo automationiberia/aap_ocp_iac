@@ -3,6 +3,7 @@ resources:
   - namespace.yaml
   - operatorgroup.yaml
   - subscription.yaml
-  - automationcontroller.yaml
+  - automationcontroller_dev.yaml
+  - automationcontroller_prd.yaml
   - automationhub.yaml
 ...
