@@ -18,7 +18,8 @@ $ ansible-vault encrypt group_vars/all/vault
 ## Create OCP object needed to deploy AAP
 
 ```
-$ ansible-navigator run bootstrap.yaml -m stdout --eei quay.io/automationiberia/ee-ocp-aap-iac-casc --vault-password-file .vault_password
+$ ansible-navigator run bootstrap.yaml -i inventory -l cluster1 -m stdout --eei quay.io/automationiberia/ee-ocp-aap-iac-casc --vault-password-file .vault_password
+$ ansible-navigator run bootstrap.yaml -i inventory -l cluster2 -m stdout --eei quay.io/automationiberia/ee-ocp-aap-iac-casc --vault-password-file .vault_password
 ```
 ## Variables
 

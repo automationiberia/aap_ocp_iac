@@ -1,0 +1,14 @@
+---
+# Amazon ccess credentials
+vault_aws_access_key: "access_key_token"
+vault_aws_secret_key: "aws_secret_key"
+vault_aws_region: "eu-central-1"
+# OCP credentials
+vault_ocp_api_key: "sha256~key"
+vault_ocp_api_host: "https://api.cluster-2.lab.example.com:6443"
+vault_ocp_api_validate_certs: false
+# ArgoCD
+vault_argocd_repository_secret_name: "gitops-examples-repo-secret"
+vault_argocd_repository_password: "glpat-token"
+vault_argocd_repository_username: "testathon"
+...
