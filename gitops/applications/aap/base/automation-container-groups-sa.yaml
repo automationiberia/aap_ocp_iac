@@ -1,0 +1,7 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: containergroup-sa
+  namespace: ansible-automation-platform
+...
