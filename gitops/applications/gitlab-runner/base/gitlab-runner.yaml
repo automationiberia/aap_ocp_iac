@@ -7,6 +7,6 @@ metadata:
 spec:
   gitlabUrl: 'https://gitlab.com'
   imagePullPolicy: Always
-  tags: 'casc, testathon'
+  tags: 'controller-group, casc, testathon'
   token: gitlab-runner-secret
 ...
