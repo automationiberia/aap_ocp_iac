@@ -18,10 +18,16 @@
 
     - name: Create a Ansible Automation Platform namespace
       kubernetes.core.k8s:
-        name: "{{ aap_ocp_namespace }}"
-        api_version: v1
-        kind: Namespace
         state: present
+        definition:
+          name: "{{ aap_ocp_namespace }}"
+          api_version: v1
+          kind: Namespace
+          metadata:
+            name: "{{ aap_ocp_namespace }}"
+            labels:
+              openshift.io/cluster-monitoring: "true"
+              argocd.argoproj.io/managed-by: openshift-gitops
 
     - name: "Create Automation Hub secret to access S3 bucket"
       kubernetes.core.k8s:

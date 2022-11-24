@@ -2,6 +2,8 @@
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
   name: containergroup-role-binding
   namespace: ansible-automation-platform
 subjects:
