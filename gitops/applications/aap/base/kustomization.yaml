@@ -3,7 +3,7 @@ resources:
   - namespace.yaml
   - operatorgroup.yaml
   - subscription.yaml
-#  - automationcontroller_dev.yaml
+  - automationcontroller_dev.yaml
 #  - automationcontroller_prd.yaml
 #  - automationhub.yaml
 ## https://docs.ansible.com/automation-controller/latest/html/administration/containers_instance_groups.html#create-a-container-group
