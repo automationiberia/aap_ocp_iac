@@ -50,8 +50,8 @@ spec:
         cpu: 100m
         memory: 512Mi
       limits:
-        cpu: '1'
-        memory: 4Gi
+        cpu: '1500m'
+        memory: 6Gi
   postgres_storage_requirements:
     limits:
       storage: 50Gi
@@ -95,8 +95,8 @@ spec:
     replicas: 2
     resource_requirements:
       limits:
-        cpu: '500m'
-        memory: '4Gi'
+        cpu: '1500m'
+        memory: '6Gi'
       requests:
         cpu: '100m'
         memory: '512Mi'
