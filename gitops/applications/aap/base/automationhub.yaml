@@ -4,7 +4,6 @@ kind: AutomationHub
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "4"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   labels:
     app.kubernetes.io/component: automationhub
     app.kubernetes.io/managed-by: automationhub-operator

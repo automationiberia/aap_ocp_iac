@@ -4,7 +4,6 @@ kind: OperatorGroup
 metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "1"
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
   name: ansible-automation-platform-operator
   namespace: ansible-automation-platform
   labels:
