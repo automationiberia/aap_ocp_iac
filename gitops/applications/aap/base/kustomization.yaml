@@ -9,6 +9,6 @@ resources:
 #  - automation-container-groups-role.yaml
 #  - automation-container-groups-sa.yaml
   - automationcontroller_dev.yaml
-  - automationcontroller_prd.yaml
+#  - automationcontroller_prd.yaml
 #  - automationhub.yaml
 ...
