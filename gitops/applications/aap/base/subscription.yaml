@@ -11,7 +11,7 @@ metadata:
     openshift.io/cluster-monitoring: "true"
     argocd.argoproj.io/managed-by: openshift-gitops
 spec:
-  channel: 'stable-2.3'
+  channel: 'stable-2.4'
   installPlanApproval: Automatic
   name: ansible-automation-platform-operator
   source: redhat-operators
